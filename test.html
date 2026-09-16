@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>All STARs Q3 — Solve It With AI 🤖</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>" />
+<style>
+:root{
+  --pitch-900:#0a3d1f;--pitch-800:#0f5129;--pitch-700:#157a3a;--pitch-600:#1b9e4b;
+  --pitch-500:#27c05e;--lime:#b6f36b;--chalk:#f4fbf3;--ink:#0c2415;--card:#fff;
+  --line:#e4ede4;--muted:#5d7266;--gold:#ffc531;--silver:#cbd5d1;--bronze:#d9955b;
+  --shadow:0 8px 24px rgba(10,61,31,.12);--radius:16px;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
+  background:radial-gradient(1200px 500px at 100% -10%,rgba(39,192,94,.18),transparent),linear-gradient(180deg,#eefaef 0%,#f6fbf5 100%);min-height:100vh;}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  padding:12px 20px;background:linear-gradient(120deg,var(--pitch-900),var(--pitch-700));color:#fff;box-shadow:var(--shadow);}
+.brand{display:flex;align-items:center;gap:12px;}
+.crest{font-size:32px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3));}
+.league{font-size:12px;letter-spacing:2px;text-transform:uppercase;opacity:.85;}
+.brandsub{font-size:20px;font-weight:800;}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;}
+.tabs button{border:none;cursor:pointer;background:rgba(255,255,255,.1);color:#eafff0;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:600;transition:background .15s,transform .1s;}
+.tabs button:hover{background:rgba(255,255,255,.22);}
+.tabs button.active{background:var(--lime);color:var(--pitch-900);}
+main{max-width:1080px;margin:0 auto;padding:24px 20px 64px;}
+.view{animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+.page-title{font-size:28px;margin:6px 0 4px;}
+.page-sub{color:var(--muted);margin:0 0 20px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;}
+.btn{border:none;cursor:pointer;font-weight:700;font-size:15px;padding:12px 20px;border-radius:999px;transition:transform .1s,filter .15s,box-shadow .15s;}
+.btn:active{transform:translateY(1px);}
+.btn.primary{background:var(--pitch-600);color:#fff;box-shadow:0 6px 16px rgba(27,158,75,.35);}
+.btn.primary:hover{filter:brightness(1.07);}
+.btn.ghost{background:transparent;color:var(--pitch-800);border:2px solid var(--pitch-600);}
+.btn.ghost:hover{background:rgba(27,158,75,.08);}
+.btn.small{padding:7px 14px;font-size:13px;}
+.hero{position:relative;overflow:hidden;border-radius:22px;padding:44px 28px;color:#fff;text-align:center;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 40px,transparent 40px 80px),linear-gradient(135deg,var(--pitch-800),var(--pitch-600));box-shadow:var(--shadow);}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.16);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:14px;}
+.hero h1{font-size:clamp(32px,6vw,54px);margin:6px 0;letter-spacing:-1px;background:linear-gradient(100deg,#fff 30%,var(--lime) 50%,#fff 70%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 5s linear infinite;}
+@keyframes shine{to{background-position:200% center;}}
+.hero h1 .no-clip{-webkit-text-fill-color:initial;background:none;}
+.tagline{font-size:clamp(15px,2.4vw,20px);font-weight:500;opacity:.95;margin:8px auto 22px;max-width:620px;}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.hero-cta .btn.ghost{color:#fff;border-color:rgba(255,255,255,.8);}
+.hero-cta .btn.ghost:hover{background:rgba(255,255,255,.14);}
+.hero-fx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
+.hero-fx span{position:absolute;bottom:-40px;font-size:30px;opacity:.16;animation:floatUp linear infinite;}
+.hero-fx span:nth-child(1){left:6%;animation-duration:11s;animation-delay:0s;}
+.hero-fx span:nth-child(2){left:20%;animation-duration:14s;animation-delay:2s;font-size:24px;}
+.hero-fx span:nth-child(3){left:34%;animation-duration:9s;animation-delay:1s;}
+.hero-fx span:nth-child(4){left:48%;animation-duration:13s;animation-delay:4s;font-size:22px;}
+.hero-fx span:nth-child(5){left:62%;animation-duration:10s;animation-delay:.5s;}
+.hero-fx span:nth-child(6){left:74%;animation-duration:15s;animation-delay:3s;font-size:26px;}
+.hero-fx span:nth-child(7){left:85%;animation-duration:12s;animation-delay:1.5s;}
+.hero-fx span:nth-child(8){left:93%;animation-duration:8s;animation-delay:2.5s;font-size:20px;}
+@keyframes floatUp{0%{transform:translateY(0) rotate(0deg);opacity:0;}15%{opacity:.22;}85%{opacity:.22;}100%{transform:translateY(-115%) rotate(180deg);opacity:0;}}
+.hero>*:not(.hero-fx){position:relative;z-index:1;}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0;}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;text-align:center;box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease;}
+.stat:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(10,61,31,.18);}
+.stat-num{font-size:40px;font-weight:900;color:var(--pitch-700);line-height:1;}
+.stat-num.bump{animation:bump .4s ease;}
+@keyframes bump{0%{transform:scale(1);}40%{transform:scale(1.25);color:var(--pitch-500);}100%{transform:scale(1);}}
+.stat-label{color:var(--muted);font-size:13px;margin-top:8px;font-weight:600;}
+.howto h2{margin-top:0;}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.steps li{display:flex;flex-direction:column;gap:4px;background:var(--chalk);border:1px dashed var(--line);border-radius:12px;padding:16px;}
+.step-emoji{font-size:26px;}
+.steps strong{font-size:15px;}
+.steps span:last-child{color:var(--muted);font-size:13px;}
+.challenge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;}
+.challenge{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease;}
+.challenge:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(10,61,31,.18);}
+.challenge-head{padding:18px 20px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--pitch-700),var(--pitch-500));display:flex;align-items:flex-start;gap:12px;}
+.challenge:nth-child(2) .challenge-head{background:linear-gradient(135deg,#0f6d8a,#23a6c0);}
+.challenge:nth-child(3) .challenge-head{background:linear-gradient(135deg,#7a3ba8,#b163d6);}
+.challenge-tag{font-size:12px;text-transform:uppercase;letter-spacing:1px;opacity:.9;font-weight:700;}
+.challenge-title{font-size:18px;font-weight:800;margin-top:2px;}
+.challenge-head .chev{margin-left:auto;font-size:20px;transition:transform .2s;}
+.challenge.open .chev{transform:rotate(180deg);}
+.challenge-body{padding:0 20px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease;}
+.challenge.open .challenge-body{max-height:1200px;padding:18px 20px 20px;}
+.quote{border-left:4px solid var(--lime);background:var(--chalk);padding:12px 14px;border-radius:8px;font-style:italic;color:#3a4f43;margin:0 0 14px;}
+.challenge-body h4{margin:14px 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);}
+.challenge-body p{margin:0 0 8px;line-height:1.5;}
+.form{display:grid;gap:16px;max-width:680px;}
+.form label{display:grid;gap:6px;font-weight:700;font-size:14px;}
+.form .opt{color:var(--muted);font-weight:400;}
+.form input[type=text],.form input[type=password],.form select,.form textarea{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fcfefc;color:var(--ink);width:100%;}
+.form textarea{resize:vertical;}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--pitch-500);box-shadow:0 0 0 3px rgba(39,192,94,.15);}
+.form-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.form-msg{font-weight:600;}
+.form-msg.ok{color:var(--pitch-700);}
+.form-msg.err{color:#c0392b;}
+.shot-preview img{max-width:220px;border-radius:10px;border:1px solid var(--line);margin-top:6px;}
+.controls{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:18px;align-items:end;}
+.controls label{display:grid;gap:5px;font-size:13px;font-weight:700;color:var(--muted);}
+.controls select{font:inherit;padding:9px 11px;border:1.5px solid var(--line);border-radius:10px;background:#fff;}
+.brief-counts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.brief-count{text-align:center;border-radius:12px;padding:18px 12px;border:1px solid var(--line);background:var(--chalk);transition:transform .18s ease,box-shadow .18s ease;}
+.brief-count:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(10,61,31,.18);}
+.brief-count.brief-A{border-top:4px solid var(--pitch-500);}
+.brief-count.brief-B{border-top:4px solid #23a6c0;}
+.brief-count.brief-C{border-top:4px solid #b163d6;}
+.brief-count-emoji{font-size:26px;}
+.brief-count-num{font-size:36px;font-weight:900;color:var(--pitch-700);line-height:1.1;}
+.brief-count-label{font-size:12px;color:var(--muted);font-weight:700;margin-top:4px;}
+.site-count-list{display:grid;gap:10px;}
+.site-count-row{display:grid;grid-template-columns:minmax(120px,220px) 1fr 40px;align-items:center;gap:12px;}
+.site-count-name{font-weight:700;font-size:14px;}
+.site-count-bar{height:12px;border-radius:999px;background:var(--line);overflow:hidden;}
+.site-count-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--pitch-600),var(--pitch-500));border-radius:999px;transition:width .5s ease;}
+.site-count-num{font-weight:900;color:var(--pitch-700);text-align:right;}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+.sub-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:10px;transition:transform .18s ease,box-shadow .18s ease;}
+.sub-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(10,61,31,.18);}
+.sub-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.pill{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;}
+.pill.brief-A{background:#dff5e6;color:var(--pitch-800);}
+.pill.brief-B{background:#dbf1f6;color:#0f6d8a;}
+.pill.brief-C{background:#efe1f8;color:#7a3ba8;}
+.pill.site{background:var(--chalk);color:var(--muted);}
+.sub-name{font-weight:800;}
+.sub-block h5{margin:8px 0 3px;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);}
+.sub-block p{margin:0;white-space:pre-wrap;line-height:1.45;font-size:14px;}
+.sub-shot img{max-width:100%;border-radius:10px;border:1px solid var(--line);margin-top:6px;}
+.dim{color:var(--muted);}
+.empty{text-align:center;color:var(--muted);padding:40px 20px;font-weight:600;}
+.empty .big{font-size:40px;display:block;margin-bottom:8px;}
+.livepill{position:fixed;bottom:16px;right:16px;z-index:50;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:700;}
+.livepill .dot{width:9px;height:9px;border-radius:50%;background:var(--pitch-500);box-shadow:0 0 0 0 rgba(39,192,94,.6);animation:pulse 1.8s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(39,192,94,.6);}70%{box-shadow:0 0 0 8px rgba(39,192,94,0);}100%{box-shadow:0 0 0 0 rgba(39,192,94,0);}}
+.confetti{position:fixed;top:-50px;z-index:60;pointer-events:none;will-change:transform,opacity;animation-name:confettiFall;animation-timing-function:cubic-bezier(.3,.6,.5,1);animation-fill-mode:forwards;}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(108vh) rotate(720deg);opacity:.15;}}
+.btn.primary:hover{box-shadow:0 8px 22px rgba(27,158,75,.5);}
+@media (max-width:720px){.stat-row{grid-template-columns:1fr;}.steps{grid-template-columns:1fr 1fr;}.topbar{flex-direction:column;align-items:stretch;}.tabs{justify-content:center;}.livepill{bottom:10px;right:10px;}}
+@media (max-width:440px){.steps{grid-template-columns:1fr;}.tabs button{padding:8px 10px;font-size:13px;}.brief-counts{grid-template-columns:1fr;}.site-count-row{grid-template-columns:1fr 40px;}.site-count-bar{display:none;}}
+@media (prefers-reduced-motion:reduce){.hero-fx,.confetti{display:none;}.hero h1{animation:none;-webkit-text-fill-color:#fff;}.stat-num.bump{animation:none;}}
+</style>
+</head>
+<body>
+<div class="livepill" title="Data is saved in this browser"><span class="dot"></span><span>saved locally</span></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="crest">⚽</span>
+    <div><div class="league">All STARs League · Q3</div><div class="brandsub">Solve It With AI</div></div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button data-view="home" class="active">🏟️ Overview</button>
+    <button data-view="challenges">🎯 Challenges</button>
+    <button data-view="guide">📖 Build Guide</button>
+    <button data-view="submit">✍️ Submit</button>
+    <button data-view="gallery">🖼️ Submissions</button>
+    <button data-view="owner">🔑 Owner</button>
+  </nav>
+</header>
+
+<main id="app">
+  <section class="view" data-view="home">
+    <div class="hero">
+      <div class="hero-fx" aria-hidden="true"><span>⚽</span><span>🤖</span><span>🏆</span><span>🎯</span><span>⭐</span><span>🥅</span><span>🤖</span><span>⚽</span></div>
+      <div class="hero-badge">🏅 All STARs Q3 — Innovation on the Field</div>
+      <h1>Solve It With AI <span class="no-clip">🤖</span></h1>
+      <p class="tagline">In Q2 you gave us your best AI ideas. In Q3, solve them with AI.</p>
+      <div class="hero-cta">
+        <button class="btn primary" data-go="challenges">View the briefs 🎯</button>
+        <button class="btn ghost" data-go="submit">Submit a solution ✍️</button>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num" data-stat="totalSubmissions">0</div><div class="stat-label">⚡ Total submissions</div></div>
+      <div class="stat"><div class="stat-num" data-stat="totalPlayers">0</div><div class="stat-label">🏃 Players</div></div>
+      <div class="stat"><div class="stat-num" data-stat="participatingSites">0</div><div class="stat-label">📍 Participating sites</div></div>
+    </div>
+    <div class="card howto">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><span class="step-emoji">🎯</span><strong>Pick a brief</strong><span>Choose one of the three real-world challenges.</span></li>
+        <li><span class="step-emoji">🤖</span><strong>Build it in AgentSpaces</strong><span>Build your skill with the SC CORE Agent.</span></li>
+        <li><span class="step-emoji">📦</span><strong>Skillify &amp; raise a CR</strong><span>"Skillify" it and raise a CR to the kit.</span></li>
+        <li><span class="step-emoji">📨</span><strong>Submit your CR link</strong><span>Paste the CR link in the Submit form.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="view" data-view="challenges" hidden>
+    <h1 class="page-title">🎯 The Briefs</h1>
+    <p class="page-sub">Three real problems from the floor. Pick one and solve it with AI.</p>
+    <div class="challenge-grid" id="challengeGrid"></div>
+  </section>
+
+  <section class="view" data-view="guide" hidden>
+    <h1 class="page-title">📖 Build Your Skill in AgentSpaces</h1>
+    <p class="page-sub">Build your solution with the SC CORE Agent, raise a CR, then submit the CR link here. ~15–30 min (excluding permission propagation).</p>
+
+    <div class="card" style="text-align:center;">
+      <p style="margin:0 0 14px;font-weight:600;">🎬 Watch the full walkthrough (9 min)</p>
+      <a class="btn primary" href="https://broadcast.amazon.com/videos/2114275" target="_blank" rel="noopener">▶ Watch on Broadcast</a>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h2>✅ What you'll need</h2>
+      <ul style="line-height:1.9;margin:0;padding-left:20px;">
+        <li><strong>POSIX groups</strong> — <code>toolbox-users-misc</code> &amp; <code>source-code-misc</code> (up to 4h to propagate)</li>
+        <li><strong>Work Authorization</strong> — citizenship/nationality set in AtoZ → Work Authorization (Deemed Exports), ~15 min</li>
+        <li><strong>Tampermonkey</strong> browser extension installed</li>
+        <li><strong>~15–30 min</strong> (excluding permission propagation)</li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h2>🚀 5 steps</h2>
+      <ol style="line-height:1.8;margin:0;padding-left:20px;">
+        <li><strong>Get AgentSpaces permissions</strong> — ask your manager to add you to both POSIX groups, and set your Work Authorization in AtoZ.</li>
+        <li><strong>Open the agent</strong> — install Tampermonkey from the EUSC AI Shortcuts page, then launch the SC CORE Agent. Manual option: in AgentSpaces type <code>aim agents install SC_Manager_Core_Kit</code>, open a new session with "+" and pick <strong>SC-MANAGER-CORE</strong>.</li>
+        <li><strong>Test the skills</strong> — ask "Which skills do you have?", run one, and try an operational question about your site.</li>
+        <li><strong>Give feedback</strong> — tell the agent if a skill was useful; it logs automatically to the Slack Feedback Tracker.</li>
+        <li><strong>Create your skill</strong> — chat &amp; iterate until it works → say <em>"Let's skillify this"</em> → say <em>"Let's raise a CR"</em> pointing to <code>SC_Manager_Core_Kit</code> → paste the CR link in the Submit form here.</li>
+      </ol>
+    </div>
+
+    <div class="card" style="margin-top:16px;background:var(--chalk);">
+      <h2>🎯 The skill lifecycle</h2>
+      <p style="margin:0;font-weight:700;color:var(--pitch-800);line-height:1.8;">Chat &amp; iterate → Skillify → Raise a CR → Submit your CR link here → Merge &amp; deploy → available to all managers</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h2>🙋 Need help?</h2>
+      <p style="margin:0 0 8px;">Ask in the Slack channel <strong>#sc-agent-building</strong>, or reach an Agent Champion at your site:</p>
+      <div style="font-size:13px;color:var(--muted);line-height:1.8;columns:2;column-gap:24px;">
+        BCN8 · daordone, plasase, smarnau, miarago<br>
+        BER8 · gabharac, danishid, baraniej, wesmare, parmanio, deepuna<br>
+        DTM8 · amadmu, merhat, ralmahm, samiaja<br>
+        LIN8 · andritra, giammiac, lordisa, badov<br>
+        FCO8 · poggiald, gtadini, mbbuldin<br>
+        MAD8 · arivasr<br>
+        STN8 · asaadeh, ggguran, gertdeyz<br>
+        FRAX · ckkalle<br>
+        MUC7 · fschaffl<br>
+        BHX8 · jackts, mrcraym<br>
+        LEJ7 · stojoerg, kartikbj<br>
+        MAN8 · collieps, melvsamt<br>
+        LIL8 · soukaot, melgbz<br>
+        SXW2 · dhanvd, licidavi<br>
+        DTM9 · raschka<br>
+        BLQ8 · cirocc<br>
+        NUE9 · lucadias<br>
+        LCY8 · mbieszke<br>
+        LYS8 · medkad<br>
+        HAJ8 · qnavjeet<br>
+        LBA8 · obadaede<br>
+        KSF7 · steffu<br>
+        CDG8 · yabenkti<br>
+        MHG9 · samukoop
+      </div>
+    </div>
+  </section>
+
+  <section class="view" data-view="submit" hidden>
+    <h1 class="page-title">✍️ Submit Your Solution</h1>
+    <p class="page-sub">Built your skill in AgentSpaces? Raise a CR and drop the link below. New to this? See the <a href="#" data-go="guide" style="color:var(--pitch-700);font-weight:700;">📖 Build Guide</a>.</p>
+    <form id="submitForm" class="card form">
+      <label>Name<input name="name" type="text" required maxlength="120" placeholder="Your name" /></label>
+      <label>Site<select name="site" required><option value="">Select your site…</option></select></label>
+      <label>Chosen brief<select name="brief" required>
+        <option value="">Select a brief…</option>
+        <option value="A">Brief A · The Policy Assistant</option>
+        <option value="B">Brief B · The End-of-Shift Report Builder</option>
+        <option value="C">Brief C · The Self-Healing Metric Watchdog</option>
+      </select></label>
+      <label>Your AI solution<textarea name="solution" required rows="6" maxlength="20000" placeholder="Describe what your skill does and how it solves the brief…"></textarea></label>
+      <label>Link to your CR (code review)<input name="crLink" type="url" required maxlength="500" placeholder="https://code.amazon.com/reviews/CR-XXXXXXXXX" /></label>
+      <label>Screenshot <span class="opt">(optional)</span><input name="screenshot" type="file" accept="image/*" /><div id="shotPreview" class="shot-preview" hidden><img alt="screenshot preview" /></div></label>
+      <div class="form-actions"><button type="submit" class="btn primary">Submit for the win 🏆</button><span id="formMsg" class="form-msg"></span></div>
+    </form>
+  </section>
+
+  <section class="view" data-view="gallery" hidden>
+    <h1 class="page-title">🖼️ Submissions</h1>
+    <p class="page-sub">Live count of solutions submitted. Solutions and CR links stay in the Owner view.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num" data-stat="totalSubmissions">0</div><div class="stat-label">⚡ Total submissions</div></div>
+      <div class="stat"><div class="stat-num" data-stat="participatingSites">0</div><div class="stat-label">📍 Participating sites</div></div>
+    </div>
+    <div class="card"><h2>🎯 By brief</h2><div class="brief-counts" id="briefCounts"></div></div>
+    <div class="card" style="margin-top:16px;"><h2>📍 By site</h2><div id="siteCounts"></div></div>
+  </section>
+
+  <section class="view" data-view="owner" hidden>
+    <h1 class="page-title">🔑 Owner View</h1>
+    <p class="page-sub">Full results — every solution, CR link and screenshot.</p>
+    <form id="ownerForm" class="card form" style="max-width:420px;">
+      <label>Owner passcode<input name="key" type="password" placeholder="Enter owner passcode" autocomplete="off" /></label>
+      <div class="form-actions"><button type="submit" class="btn primary">Unlock 🔓</button><span id="ownerMsg" class="form-msg"></span></div>
+    </form>
+    <div id="ownerPanel" hidden>
+      <div class="controls">
+        <label>Site<select id="ownerFilterSite"><option value="">All sites</option></select></label>
+        <label>Brief<select id="ownerFilterBrief"><option value="">All briefs</option><option value="A">Brief A</option><option value="B">Brief B</option><option value="C">Brief C</option></select></label>
+        <label>Sort by<select id="ownerSortBy"><option value="newest">Newest</option><option value="site">Site (A–Z)</option><option value="name">Name (A–Z)</option></select></label>
+        <button class="btn ghost small" id="ownerRefresh" type="button">↻ Refresh</button>
+      </div>
+      <div id="ownerList" class="gallery"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+'use strict';
+
+/* ---------------- config ---------------- */
+const BRIEF_META = {
+  A:{tag:'Brief A',title:'The Policy Assistant',emoji:'📋',
+     quote:'"By the time I\'ve found the right paragraph in Policy 2.0 and worked out what it actually means for the floor, the moment has passed."',
+     statement:'Build an AI conversational tool that turns dense Policy 2.0 text into clear, numbered, plain-language step-by-step floor instructions — including the policy reference and any exceptions or escalation triggers.',
+     deliverables:['Plain-language, numbered step-by-step instructions','The exact policy reference for each step','Any exceptions and the escalation trigger to watch for']},
+  B:{tag:'Brief B',title:'The End-of-Shift Report Builder',emoji:'📝',
+     quote:'"Every shift ends the same way — me hopping between five tools, copying numbers into a template, when I should be handing over."',
+     statement:'Build an AI agent that auto-collects data from multiple tools and sources based on the manager\'s filters, then assembles a ready-to-send end-of-shift report.',
+     deliverables:['Manager-defined filters drive the data pull','Pulls from multiple tools/sources automatically','Outputs a complete, formatted end-of-shift report']},
+  C:{tag:'Brief C',title:'The Self-Healing Metric Watchdog',emoji:'🩺',
+     quote:'"We always find out a metric went red on Friday — when it\'s too late to do anything but explain it."',
+     statement:'Build an AI on Perfect Mile that flags metrics trending red before end of week, auto-assigns actions to owners, and tracks completion: detect → assign → fix → recover.',
+     deliverables:['Detect metrics heading red before EOW','Auto-assign corrective actions to owners','Track completion through to recovery']},
+};
+const BRIEFS = ['A','B','C'];
+const SITES = ['BHX8','BLQ8','DTM8','MAN8','LBA8','STN8','SBS2','BCN8','LIL8','LIN8','SNG1','ORY8','MAD8','DTM9','KSF7','FCO8','HAJ8','BER8','CDG8','FRAX','LCY8','LEJ7','LYS8','MUC7','NUE9','SXW2'];
+const OWNER_KEY = 'allstars-owner'; // change me
+const LS_KEY = 'siwai_submissions_v1';
+
+/* ---------------- helpers ---------------- */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc = (s)=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const personKey = (n)=>String(n||'').trim().toLowerCase();
+
+function celebrate(){
+  const em=['⚽','🤖','🏆','🎯','⭐','🥅','🔥','🥇'];
+  for(let i=0;i<34;i++){const el=document.createElement('div');el.className='confetti';el.textContent=em[(Math.random()*em.length)|0];
+    el.style.left=Math.random()*100+'vw';el.style.fontSize=16+Math.random()*22+'px';
+    el.style.animationDuration=2+Math.random()*1.8+'s';el.style.animationDelay=Math.random()*0.35+'s';
+    document.body.appendChild(el);setTimeout(()=>el.remove(),4200);}
+}
+
+/* ---------------- data (localStorage) ---------------- */
+function loadSubs(){try{return JSON.parse(localStorage.getItem(LS_KEY))||[];}catch(e){return[];}}
+function saveSubs(arr){localStorage.setItem(LS_KEY,JSON.stringify(arr));}
+let submissions = loadSubs();
+
+function computeState(){
+  const byBrief=Object.fromEntries(BRIEFS.map(b=>[b,0]));
+  const bySite={};
+  for(const s of submissions){
+    if(byBrief[s.brief]!=null)byBrief[s.brief]++;
+    (bySite[s.site]=bySite[s.site]||{players:new Set(),subs:0});
+    bySite[s.site].players.add(personKey(s.name));
+    bySite[s.site].subs++;
+  }
+  const league=SITES.map(site=>{
+    const a=bySite[site];
+    return {site,players:a?a.players.size:0,submissions:a?a.subs:0};
+  });
+  const totalPlayers=league.reduce((n,r)=>n+r.players,0);
+  return {byBrief,league,stats:{totalSubmissions:submissions.length,totalPlayers,participatingSites:league.filter(r=>r.players>0).length}};
+}
+let state = computeState();
+function refresh(){state=computeState();render();}
+
+// keep tabs of the same browser in sync
+window.addEventListener('storage',e=>{if(e.key===LS_KEY){submissions=loadSubs();ownerData=submissions;refresh();}});
+
+/* ---------------- routing ---------------- */
+let currentView='home';
+const prevStats={};
+function showView(v){currentView=v;$$('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+  $$('.view').forEach(x=>x.hidden=x.dataset.view!==v);window.scrollTo({top:0,behavior:'smooth'});render();}
+document.addEventListener('click',e=>{const t=e.target.closest('#tabs button');if(t)return showView(t.dataset.view);
+  const g=e.target.closest('[data-go]');if(g)return showView(g.dataset.go);});
+
+/* ---------------- render ---------------- */
+function render(){
+  populateDropdowns();renderStats();
+  if(currentView==='challenges')renderChallenges();
+  if(currentView==='gallery')renderSubmissions();
+  if(currentView==='owner'&&ownerKey)renderOwnerList();
+}
+let dropdownsReady=false;
+function populateDropdowns(){
+  if(dropdownsReady)return;
+  const opts=SITES.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join('');
+  $('#submitForm select[name=site]').innerHTML='<option value="">Select your site…</option>'+opts;
+  $('#ownerFilterSite').innerHTML='<option value="">All sites</option>'+opts;
+  dropdownsReady=true;
+}
+function animateNumber(el,to){const from=Number(el.textContent)||0;if(from===to){el.textContent=to;return;}
+  const dur=550,start=performance.now();const step=t=>{const p=Math.min(1,(t-start)/dur);const e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(from+(to-from)*e);if(p<1)requestAnimationFrame(step);};requestAnimationFrame(step);}
+function renderStats(){['totalSubmissions','participatingSites','totalPlayers'].forEach(k=>{
+  const val=state.stats[k]||0;const changed=prevStats[k]!==undefined&&prevStats[k]!==val;
+  $$(`[data-stat="${k}"]`).forEach(el=>{if(changed){el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');animateNumber(el,val);}else{el.textContent=val;}});
+  prevStats[k]=val;});}
+
+function renderChallenges(){
+  const grid=$('#challengeGrid');if(grid.dataset.built)return;
+  grid.innerHTML=Object.entries(BRIEF_META).map(([key,m])=>`
+    <article class="challenge" data-brief="${key}">
+      <div class="challenge-head" data-toggle>
+        <div><div class="challenge-tag">${m.emoji} ${esc(m.tag)}</div><div class="challenge-title">${esc(m.title)}</div></div>
+        <span class="chev">⌄</span>
+      </div>
+      <div class="challenge-body">
+        <blockquote class="quote">${esc(m.quote)}</blockquote>
+        <h4>The challenge</h4><p>${esc(m.statement)}</p>
+        <h4>Your solution should deliver</h4><ul>${m.deliverables.map(d=>`<li>${esc(d)}</li>`).join('')}</ul>
+        <button class="btn primary small" data-submit-brief="${key}">Submit for this brief 🏆</button>
+      </div>
+    </article>`).join('');
+  grid.dataset.built='1';
+  grid.addEventListener('click',e=>{const h=e.target.closest('[data-toggle]');if(h)h.closest('.challenge').classList.toggle('open');
+    const s=e.target.closest('[data-submit-brief]');if(s){showView('submit');$('#submitForm select[name=brief]').value=s.dataset.submitBrief;}});
+}
+
+function initForm(){
+  const form=$('#submitForm');const fileInput=form.querySelector('input[name=screenshot]');const preview=$('#shotPreview');
+  let shot=null;
+  const setMsg=(t,c)=>{const m=$('#formMsg');m.textContent=t;m.className='form-msg '+(c||'');};
+  fileInput.addEventListener('change',()=>{const f=fileInput.files[0];if(!f){shot=null;preview.hidden=true;return;}
+    if(f.size>5*1024*1024){setMsg('Screenshot must be under 5 MB.','err');fileInput.value='';shot=null;preview.hidden=true;return;}
+    const r=new FileReader();r.onload=()=>{shot=r.result;preview.querySelector('img').src=shot;preview.hidden=false;};r.readAsDataURL(f);});
+  form.addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(form);
+    const entry={id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random()),
+      name:(fd.get('name')||'').trim(),site:fd.get('site'),brief:fd.get('brief'),
+      solution:(fd.get('solution')||'').trim(),crLink:(fd.get('crLink')||'').trim(),
+      screenshot:shot,createdAt:new Date().toISOString()};
+    if(!entry.name||!SITES.includes(entry.site)||!BRIEFS.includes(entry.brief)||!entry.solution||!entry.crLink){
+      return setMsg('Please fill in all required fields.','err');}
+    if(!/^https?:\/\//i.test(entry.crLink)){return setMsg('Please enter a valid CR link (starting with http).','err');}
+    submissions.push(entry);saveSubs(submissions);ownerData=submissions;
+    form.reset();shot=null;preview.hidden=true;setMsg('🎉 GOAL! Your solution is saved.','ok');celebrate();refresh();});
+}
+
+function renderSubmissions(){
+  $('#briefCounts').innerHTML=Object.keys(BRIEF_META).map(k=>{const m=BRIEF_META[k];const c=state.byBrief[k]||0;
+    return `<div class="brief-count brief-${k}"><div class="brief-count-emoji">${m.emoji}</div><div class="brief-count-num">${c}</div><div class="brief-count-label">${esc(m.tag)} · ${esc(m.title)}</div></div>`;}).join('');
+  const box=$('#siteCounts');const rows=state.league.filter(r=>r.submissions>0).sort((a,b)=>b.submissions-a.submissions);
+  if(!rows.length){box.innerHTML='<div class="empty"><span class="big">🗒️</span>No submissions yet. Be the first to get on the board!</div>';return;}
+  const max=rows[0].submissions;
+  box.innerHTML='<div class="site-count-list">'+rows.map(r=>`
+    <div class="site-count-row">
+      <div class="site-count-name">📍 ${esc(r.site)} <span class="dim">· ${r.players} player${r.players===1?'':'s'}</span></div>
+      <div class="site-count-bar"><span style="width:${((r.submissions/max)*100).toFixed(1)}%"></span></div>
+      <div class="site-count-num">${r.submissions}</div>
+    </div>`).join('')+'</div>';
+}
+
+/* ---------------- owner ---------------- */
+let ownerKey=null;let ownerData=submissions;
+function initOwner(){
+  const form=$('#ownerForm');
+  form.addEventListener('submit',e=>{e.preventDefault();unlock(form.querySelector('input[name=key]').value);});
+  $('#ownerRefresh').addEventListener('click',()=>{submissions=loadSubs();ownerData=submissions;renderOwnerList();});
+  ['ownerFilterSite','ownerFilterBrief','ownerSortBy'].forEach(id=>$('#'+id).addEventListener('change',renderOwnerList));
+}
+function unlock(key){const msg=$('#ownerMsg');
+  if(key!==OWNER_KEY){ownerKey=null;$('#ownerPanel').hidden=true;msg.textContent='⚠️ Invalid owner passcode';msg.className='form-msg err';return;}
+  ownerKey=key;ownerData=loadSubs();submissions=ownerData;
+  msg.textContent=`🔓 Unlocked — ${ownerData.length} submission${ownerData.length===1?'':'s'}`;msg.className='form-msg ok';
+  $('#ownerPanel').hidden=false;renderOwnerList();}
+function renderOwnerList(){
+  const list=$('#ownerList');const site=$('#ownerFilterSite').value;const brief=$('#ownerFilterBrief').value;const sortBy=$('#ownerSortBy').value;
+  let items=ownerData.slice();
+  if(site)items=items.filter(s=>s.site===site);
+  if(brief)items=items.filter(s=>s.brief===brief);
+  items.sort((a,b)=>{if(sortBy==='site')return a.site.localeCompare(b.site);if(sortBy==='name')return a.name.localeCompare(b.name);return new Date(b.createdAt)-new Date(a.createdAt);});
+  if(!items.length){list.innerHTML='<div class="empty"><span class="big">🗒️</span>No submissions match.</div>';return;}
+  list.innerHTML=items.map(ownerCard).join('');
+}
+function ownerCard(s){const m=BRIEF_META[s.brief]||{};const when=new Date(s.createdAt).toLocaleString();
+  return `<article class="sub-card">
+    <div class="sub-top"><span class="pill brief-${s.brief}">${esc(m.tag||'Brief '+s.brief)}</span><span class="pill site">📍 ${esc(s.site)}</span></div>
+    <div class="sub-name">👤 ${esc(s.name)} <span class="dim" style="font-weight:400;">· ${esc(when)}</span></div>
+    <div class="sub-block"><h5>💡 Solution</h5><p>${esc(s.solution)}</p></div>
+    <div class="sub-block"><h5>🔗 CR link</h5><p><a href="${esc(s.crLink)}" target="_blank" rel="noopener" style="color:var(--pitch-700);word-break:break-all;">${esc(s.crLink)}</a></p></div>
+    ${s.screenshot?`<div class="sub-shot"><img src="${esc(s.screenshot)}" alt="submission screenshot" /></div>`:''}
+  </article>`;}
+
+/* ---------------- boot ---------------- */
+initForm();initOwner();render();
+</script>
+</body>
+</html>
